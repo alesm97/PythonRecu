@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<listaRevistas>
+	<libro>
+		<titulo>adasdasd</titulo>
+		<descripcion>asdasdad</descripcion>
+		<ejemplar>5</ejemplar>
+		<tematica>sdasdad</tematica>
+		<mes_publicacion>asdasd</mes_publicacion>
+		<anho_publicacion>asdasd</anho_publicacion>
+	</libro>
+</listaRevistas>
