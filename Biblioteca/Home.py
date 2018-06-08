@@ -1,3 +1,4 @@
+# coding=utf-8
 import xml.dom.minidom as minidom
 import xml.etree.cElementTree as ET
 
@@ -298,7 +299,7 @@ def guardarLibros():
         docRoot.appendChild(nodo)
 
     pf = open("listas/listaLibros.xml", 'w')
-    pf.write(miXML.toprettyxml(encoding='UTF-8'))
+    pf.write(miXML.toprettyxml())
     pf.close()
 
 
@@ -588,6 +589,78 @@ def agregarUsuario():
     else:
         print("Usuario no agregado")
         globals()["menuUsuarios"]()
+
+
+def agregarPrestamo():
+    tipo = -1
+    noNumero = True
+    while 1 < tipo > 3 and noNumero:
+        try:
+            tipo = int(input("¿De qué desea hacer el préstamo?\n\t1.- Libro\n\t2.- Revista\n\t3.- Película"))
+        except ValueError:
+            print("Debe introducir un número.")
+        if 1 > tipo > 3:
+            print("Número no válido.")
+        else:
+            noNumero = False
+
+    if tipo == 1:
+        listarLibros(None)
+        libro = int(input("¿De qué libro desea hacer el préstamo?"))
+        if 0 > libro > len(globals()["libros"]):
+            print("Número no válido.")
+        else:
+            if globals()["libros"][libro].ejemplar == 0:
+                print("No hay ejemplares de ese libro.")
+            else:
+                listarUsuarios(None)
+                usuario = int(input("¿A qué usuario desea hacerle el préstamo?"))
+                if 0 > usuario > len(globals()["usuarios"]):
+                    print("Usuario no válido.")
+                else:
+                    globals()["prestamos"].add(
+                        Prestamo(globals()["libros"][libro].codigo, globals()["usuarios"][usuario].dni,
+                                 globals()["libros"][libro].prestamo))
+                    globals()["libros"][libro].ejemplar -= 1
+                    print("Préstamo añadido correctamente.")
+    elif tipo == 2:
+        listarRevistas(None)
+        revista = int(input("¿De qué revista desea hacer el préstamo?"))
+        if 0 > revista > len(globals()["revistas"]):
+            print("Número no válido.")
+        else:
+            if globals()["revistas"][revista].ejemplar == 0:
+                print("No hay ejemplares de ese revista.")
+            else:
+                listarRevistas(None)
+                usuario = int(input("¿A qué usuario desea hacerle el préstamo?"))
+                if 0 > usuario > len(globals()["usuarios"]):
+                    print("Usuario no válido.")
+                else:
+                    globals()["prestamos"].add(
+                        Prestamo(globals()["revistas"][revista].codigo, globals()["usuarios"][usuario].dni,
+                                 globals()["revistas"][revista].prestamo))
+                    globals()["revistas"][revista].ejemplar -= 1
+                    print("Préstamo añadido correctamente.")
+    elif tipo == 3:
+        listarPeliculas(None)
+        pelicula = int(input("¿De qué pelicula desea hacer el préstamo?"))
+        if 0 > pelicula > len(globals()["peliculas"]):
+            print("Número no válido.")
+        else:
+            if globals()["peliculas"][pelicula].ejemplar == 0:
+                print("No hay ejemplares de esa película.")
+            else:
+                listarPeliculas(None)
+                usuario = int(input("¿A qué usuario desea hacerle el préstamo?"))
+                if 0 > usuario > len(globals()["usuarios"]):
+                    print("Usuario no válido.")
+                else:
+                    globals()["prestamos"].add(
+                        Prestamo(globals()["peliculas"][pelicula].codigo, globals()["usuarios"][usuario].dni,
+                                 globals()["peliculas"][pelicula].prestamo))
+                    globals()["peliculas"][pelicula].ejemplar -= 1
+                    print("Préstamo añadido correctamente.")
 
 
 # endregion
