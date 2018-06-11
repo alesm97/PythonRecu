@@ -1,11 +1,19 @@
 <?xml version="1.0" ?>
 <listaRevistas>
 	<libro>
-		<titulo>adasdasd</titulo>
-		<descripcion>asdasdad</descripcion>
-		<ejemplar>5</ejemplar>
-		<tematica>sdasdad</tematica>
-		<mes_publicacion>asdasd</mes_publicacion>
-		<anho_publicacion>asdasd</anho_publicacion>
+		<titulo>revista 1</titulo>
+		<descripcion>revista 1</descripcion>
+		<ejemplar>8</ejemplar>
+		<tematica>revista 1</tematica>
+		<mes_publicacion>revista 1</mes_publicacion>
+		<anho_publicacion>revista 1</anho_publicacion>
+	</libro>
+	<libro>
+		<titulo>revista 2</titulo>
+		<descripcion>revista 2</descripcion>
+		<ejemplar>567</ejemplar>
+		<tematica>revista 2</tematica>
+		<mes_publicacion>revista 2</mes_publicacion>
+		<anho_publicacion>revista 2</anho_publicacion>
 	</libro>
 </listaRevistas>

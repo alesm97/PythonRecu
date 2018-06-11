@@ -1,4 +1,17 @@
 <?xml version="1.0" ?>
-<listaPeliculas>
-
-</listaPeliculas>
+<listaLibros>
+	<libro>
+		<titulo>libro 1</titulo>
+		<descripcion>libro 1</descripcion>
+		<ejemplar>5</ejemplar>
+		<editorial>libro 1</editorial>
+		<codigo>LIB14</codigo>
+	</libro>
+	<libro>
+		<titulo>libro 2</titulo>
+		<descripcion>libro 2</descripcion>
+		<ejemplar>6</ejemplar>
+		<editorial>libro 2</editorial>
+		<codigo>LIB15</codigo>
+	</libro>
+</listaLibros>
