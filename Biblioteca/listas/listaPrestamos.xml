@@ -5,4 +5,14 @@
 		<articulo>LIB14</articulo>
 		<duracion>7</duracion>
 	</prestamo>
+	<prestamo>
+		<dni>75897314M</dni>
+		<articulo>LIB14</articulo>
+		<duracion>7</duracion>
+	</prestamo>
+	<prestamo>
+		<dni>75897314M</dni>
+		<articulo>LIB14</articulo>
+		<duracion>7</duracion>
+	</prestamo>
 </listaPrestamos>
