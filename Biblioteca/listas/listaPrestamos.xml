@@ -1,2 +1,8 @@
 <?xml version="1.0" ?>
-<listaPrestamos/>
+<listaPrestamos>
+	<prestamo>
+		<dni>75897314M</dni>
+		<articulo>LIB14</articulo>
+		<duracion>7</duracion>
+	</prestamo>
+</listaPrestamos>

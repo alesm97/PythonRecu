@@ -14,7 +14,7 @@ funcionesMenuLibros = ("listarLibros", "agregarLibro", "eliminarLibro", "listarL
 funcionesMenuRevistas = ("listarRevistas", "agregarRevista", "eliminarRevista", "listarRevistas", "menuPrincipal")
 funcionesMenuPeliculas = (
     "listarPeliculas", "agregarPelicula", "eliminarPelicula", "listarPeliculas", "menuPrincipal")
-funcionesMenuUsuarios = ("listarUsuarios", "agregarUsuario", "eliminarUsuario", "listarUsuarios", "menuPrincipal")
+funcionesMenuUsuarios = ("listarUsuarios", "agregarUsuario", "eliminarUsuario", "menuPrincipal")
 funcionesMenuPrestamos = ("listarPrestamos", "agregarPrestamo", "eliminarPrestamo", "menuPrincipal")
 
 libros = []
@@ -157,7 +157,10 @@ def menuUsuarios():
 
     if funcionesMenuUsuarios[globals()["opcion"] - 1] in globals():
         if callable(globals()[funcionesMenuUsuarios[globals()["opcion"] - 1]]):
-            globals()[funcionesMenuUsuarios[globals()["opcion"] - 1]]()
+            if globals()["opcion"] == 1:
+                globals()[funcionesMenuUsuarios[globals()["opcion"] - 1]]("menuUsuarios")
+            else:
+                globals()[funcionesMenuUsuarios[globals()["opcion"] - 1]]()
 
 
 def menuPrestamos():
@@ -396,11 +399,11 @@ def guardarPrestamos():
         elemento = miXML.createElement("dni")
         elemento.appendChild(miXML.createTextNode(prestamo.dni))
         nodo.appendChild(elemento)
-        elemento = miXML.createElement("nombre")
+        elemento = miXML.createElement("articulo")
         elemento.appendChild(miXML.createTextNode(prestamo.articulo))
         nodo.appendChild(elemento)
-        elemento = miXML.createElement("apellidos")
-        elemento.appendChild(miXML.createTextNode(prestamo.duracion))
+        elemento = miXML.createElement("duracion")
+        elemento.appendChild(miXML.createTextNode(str(prestamo.duracion)))
         nodo.appendChild(elemento)
         docRoot.appendChild(nodo)
 
@@ -418,11 +421,12 @@ def listarLibros(menu, detalles=False):
         for libro in globals()["libros"]:
             contador += 1
             if not detalles:
-                print("{} -> Código: {} Título: {} ".format(contador, libro.codigo, libro.titulo))
+                print("{} -> Código: {} Título: {} Disponible: {}".format(contador, libro.codigo, libro.titulo,
+                                                                          "Sí" if int(libro.ejemplar) > 0 else "No"))
             else:
                 print(
-                    "{} -> Código: {} -- Título: {} -- Editorial: {} -- Ejemplares: {} -- Días de prestamo: {}".format(
-                        contador, libro.codigo, libro.titulo,
+                    "{} -> Código: {} -- Título: {} -- Disponible: {} -- Editorial: {} -- Ejemplares: {} -- Días de prestamo: {}".format(
+                        contador, libro.codigo, libro.titulo, "Sí" if int(libro.ejemplar) > 0 else "No",
                         libro.editorial, libro.ejemplar, libro.prestamo))
     else:
         print("No hay libros registrados")
@@ -436,12 +440,13 @@ def listarRevistas(menu, detalles=False):
         for revista in globals()["revistas"]:
             contador += 1
             if not detalles:
-                print("{} -> Código: {} Título: {} ".format(contador, revista.codigo, revista.titulo))
+                print("{} -> Código: {} Título: {} Disponible: {}".format(contador, revista.codigo, revista.titulo,
+                                                                          "Sí" if int(revista.ejemplar) > 0 else "No"))
             else:
                 print(
-                    "{} -> Código: {} -- Título: {} -- Descripción: {} -- Ejemplares: {} -- Temática: {} "
+                    "{} -> Código: {} -- Título: {} -- Disponible: {} -- Descripción: {} -- Ejemplares: {} -- Temática: {} "
                     "-- Publicación: {}/{}".format(
-                        contador, revista.codigo, revista.titulo,
+                        contador, revista.codigo, revista.titulo, "Sí" if int(revista.ejemplar) > 0 else "No",
                         revista.descripcion, revista.ejemplar, revista.tematica, revista.mes_publicacion,
                         revista.anho_publicacion))
     else:
@@ -456,12 +461,12 @@ def listarPeliculas(menu, detalles=False):
         for pelicula in globals()["peliculas"]:
             contador += 1
             if not detalles:
-                print("{} -> Código: {} Título: {} ".format(contador, pelicula.codigo, pelicula.titulo))
+                print("{} -> Código: {} Título: {} Disponible: {}".format(contador, pelicula.codigo, pelicula.titulo,
+                                                                          "Sí" if int(pelicula.ejemplar) > 0 else "No"))
             else:
-                # TODO terminar los campos
                 print(
-                    "{} -> Código: {} -- Título: {} -- Sinopsis: {} -- Ejemplares: {} -- Días de prestamo: {}".format(
-                        contador, pelicula.codigo, pelicula.titulo,
+                    "{} -> Código: {} -- Título: {} -- Disponible: {} -- Sinopsis: {} -- Ejemplares: {} -- Días de prestamo: {}".format(
+                        contador, pelicula.codigo, pelicula.titulo, "Sí" if int(pelicula.ejemplar) > 0 else "No",
                         pelicula.descripcion, pelicula.ejemplar, pelicula.prestamo))
     else:
         print("No hay películas registradas")
@@ -586,7 +591,7 @@ def agregarUsuario():
 
         globals()["usuarios"].append(Usuario(dni, nombre, apellidos))
         print("Usuario agregado con éxito.")
-        listarUsuarios()
+        listarUsuarios(None)
         globals()["guardarUsuarios"]()
         globals()["menuUsuarios"]()
     else:
@@ -614,7 +619,7 @@ def agregarPrestamo():
             if 0 > libro > len(globals()["libros"]):
                 print("Número no válido.")
             else:
-                if globals()["libros"][libro].ejemplar == 0:
+                if globals()["libros"][libro - 1].ejemplar == 0:
                     print("No hay ejemplares de ese libro.")
                 else:
                     listarUsuarios(None)
@@ -623,11 +628,13 @@ def agregarPrestamo():
                         if 0 > usuario > len(globals()["usuarios"]):
                             print("Usuario no válido.")
                         else:
-                            globals()["prestamos"].add(
-                                Prestamo(globals()["libros"][libro].codigo, globals()["usuarios"][usuario].dni,
-                                         globals()["libros"][libro].prestamo))
-                            globals()["libros"][libro].ejemplar -= 1
+
+                            globals()["prestamos"].append(
+                                Prestamo(globals()["usuarios"][usuario - 1].dni, globals()["libros"][libro - 1].codigo,
+                                         globals()["libros"][libro - 1].prestamo))
+                            globals()["libros"][libro - 1].ejemplar = int(globals()["libros"][libro - 1].ejemplar) - 1
                             print("Préstamo añadido correctamente.")
+                            globals()["guardarPrestamos"]()
                     else:
                         print("Préstamo cancelado.")
         else:
@@ -639,7 +646,7 @@ def agregarPrestamo():
             if 0 > revista > len(globals()["revistas"]):
                 print("Número no válido.")
             else:
-                if globals()["revistas"][revista].ejemplar == 0:
+                if globals()["revistas"][revista - 1].ejemplar == 0:
                     print("No hay ejemplares de ese revista.")
                 else:
                     listarRevistas(None)
@@ -649,10 +656,13 @@ def agregarPrestamo():
                             print("Usuario no válido.")
                         else:
                             globals()["prestamos"].add(
-                                Prestamo(globals()["revistas"][revista].codigo, globals()["usuarios"][usuario].dni,
-                                         globals()["revistas"][revista].prestamo))
-                            globals()["revistas"][revista].ejemplar -= 1
+                                Prestamo(globals()["usuarios"][usuario - 1].dni,
+                                         globals()["revistas"][revista - 1].codigo,
+                                         globals()["revistas"][revista - 1].prestamo))
+                            globals()["revistas"][revista - 1].ejemplar = int(
+                                globals()["revistas"][revista - 1].ejemplar) - 1
                             print("Préstamo añadido correctamente.")
+                            globals()["guardarPrestamos"]()
                     else:
                         print("Préstamo cancelado.")
         else:
@@ -664,7 +674,7 @@ def agregarPrestamo():
             if 0 > pelicula > len(globals()["peliculas"]):
                 print("Número no válido.")
             else:
-                if globals()["peliculas"][pelicula].ejemplar == 0:
+                if globals()["peliculas"][pelicula - 1].ejemplar == 0:
                     print("No hay ejemplares de esa película.")
                 else:
                     listarPeliculas(None)
@@ -674,10 +684,13 @@ def agregarPrestamo():
                             print("Usuario no válido.")
                         else:
                             globals()["prestamos"].add(
-                                Prestamo(globals()["peliculas"][pelicula].codigo, globals()["usuarios"][usuario].dni,
-                                         globals()["peliculas"][pelicula].prestamo))
-                            globals()["peliculas"][pelicula].ejemplar -= 1
+                                Prestamo(globals()["usuarios"][usuario - 1].dni,
+                                         globals()["peliculas"][pelicula - 1].codigo,
+                                         globals()["peliculas"][pelicula - 1].prestamo))
+                            globals()["peliculas"][pelicula].ejemplar = int(
+                                globals()["peliculas"][pelicula].ejemplar) - 1
                             print("Préstamo añadido correctamente.")
+                            globals()["guardarPrestamos"]()
                     else:
                         print("Préstamo cancelado.")
         else:
@@ -689,7 +702,7 @@ def agregarPrestamo():
 
 # region Eliminación de Datos
 def eliminarLibro():
-    if contarRegistros(globals()["libros"]):
+    if tieneRegistros(globals()["libros"]):
         listarLibros(None)
         valido = False
 
@@ -716,7 +729,7 @@ def eliminarLibro():
 
 
 def eliminarRevista():
-    if contarRegistros(globals()["revistas"]):
+    if tieneRegistros(globals()["revistas"]):
         listarRevistas(None)
         valido = False
         while not valido:
@@ -743,7 +756,7 @@ def eliminarRevista():
 
 
 def eliminarPelicula():
-    if contarRegistros(globals()["peliculas"]):
+    if tieneRegistros(globals()["peliculas"]):
         listarPeliculas(None)
         valido = False
         while not valido:
@@ -770,7 +783,7 @@ def eliminarPelicula():
 
 
 def eliminarUsuario():
-    if contarRegistros(globals()["usuarios"]):
+    if tieneRegistros(globals()["usuarios"]):
         listarUsuarios(None)
         valido = False
         while not valido:
@@ -796,7 +809,7 @@ def eliminarUsuario():
 
 
 def eliminarPrestamo():
-    if contarRegistros(globals()["prestamos"]):
+    if tieneRegistros(globals()["prestamos"]):
         listarPrestamos(None)
         valido = False
         while not valido:
@@ -807,25 +820,25 @@ def eliminarPrestamo():
                 print("Debe introducir un número")
                 valido = False
 
-        if 0 > eliminado > len(peliculas):
+        if 0 > eliminado > len(prestamos):
             print("Número inválido")
         else:
             if eliminado == -1:
                 print("Eliminación cancelada")
             else:
-                codigo = globals()["prestamos"][eliminado].codigo
-                if codigo.startswith("LIB"):
+                articulo = globals()["prestamos"][eliminado - 1].articulo
+                if articulo.startswith("LIB"):
                     for libro in globals()["libros"]:
-                        if libro.codigo == codigo:
-                            libro.ejemplar += 1
-                elif codigo.startswith("REV"):
+                        if libro.codigo == articulo:
+                            libro.ejemplar = int(libro.ejemplar) + 1
+                elif articulo.startswith("REV"):
                     for revista in globals()["revistas"]:
-                        if revista.codigo == codigo:
-                            revista.ejemplar += 1
-                elif codigo.startswith("PEL"):
+                        if revista.codigo == articulo:
+                            revista.ejemplar = int(revista.ejemplar) + 1
+                elif articulo.startswith("PEL"):
                     for pelicula in globals()["peliculas"]:
-                        if pelicula.codigo == codigo:
-                            pelicula.ejemplar += 1
+                        if pelicula.codigo == articulo:
+                            pelicula.ejemplar = int(pelicula.ejemplar) + 1
                 globals()["prestamos"].pop(eliminado - 1)
                 print("Eliminado correctamente")
                 globals()["guardarPrestamos"]()
@@ -857,21 +870,19 @@ def preguntarMenu(verbo, opciones):
 # Función que valida un DNI
 def validarDNI(dni):
     tabla = "TRWAGMYFPDXBNJZSQVHLCKE"
-    dig_ext = "XYZ"
-    reemp_dig_ext = {'X': '0', 'Y': '1', 'Z': '2'}
     numeros = "1234567890"
-    dni = dni.upper()
+    valido = False
     if len(dni) == 9:
-        dig_control = dni[8]
-        dni = dni[:8]
-        if dni[0] in dig_ext:
-            dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
-        return len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) % 23] == dig_control
-    return False
+        letraControl = dni[8].upper()
+        dni2 = dni[:8]
+        if len(dni2) == len([n for n in dni2 if n in numeros]):
+            if tabla[int(dni2) % 23] == letraControl:
+                valido = True
+    return valido
 
 
 # Función que devuelve si la lista tiene mas elementos
-def contarRegistros(lista):
+def tieneRegistros(lista):
     if len(lista) > 0:
         valido = True
     else:
@@ -882,5 +893,6 @@ def contarRegistros(lista):
 # endregion
 
 # MAIN
+globals()["prestamos"] = list(globals()["prestamos"])
 cargarDatos()
 menuPrincipal()
