@@ -1,2 +1,8 @@
 <?xml version="1.0" ?>
-<listaUsuarios/>
+<listaUsuarios>
+	<usuario>
+		<dni>31828975B</dni>
+		<nombre>Miguel</nombre>
+		<apellidos>Segura</apellidos>
+	</usuario>
+</listaUsuarios>

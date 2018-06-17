@@ -616,7 +616,7 @@ def agregarPrestamo():
         listarLibros(None)
         if len(globals()["libros"]) > 0:
             libro = int(input("¿De qué libro desea hacer el préstamo?"))
-            if 0 > libro > len(globals()["libros"]):
+            if 0 < libro > len(globals()["libros"]):
                 print("Número no válido.")
             else:
                 if globals()["libros"][libro - 1].ejemplar == 0:
@@ -625,25 +625,29 @@ def agregarPrestamo():
                     listarUsuarios(None)
                     if len(globals()["usuarios"]) > 0:
                         usuario = int(input("¿A qué usuario desea hacerle el préstamo?"))
-                        if 0 > usuario > len(globals()["usuarios"]):
+                        if 0 < usuario > len(globals()["usuarios"]):
                             print("Usuario no válido.")
                         else:
-
-                            globals()["prestamos"].append(
-                                Prestamo(globals()["usuarios"][usuario - 1].dni, globals()["libros"][libro - 1].codigo,
-                                         globals()["libros"][libro - 1].prestamo))
-                            globals()["libros"][libro - 1].ejemplar = int(globals()["libros"][libro - 1].ejemplar) - 1
-                            print("Préstamo añadido correctamente.")
-                            globals()["guardarPrestamos"]()
+                            if tienePrestamo(globals()["usuarios"][usuario - 1].dni):
+                                print("Este usuario ya tiene un préstamo.")
+                            else:
+                                globals()["prestamos"].append(
+                                    Prestamo(globals()["usuarios"][usuario - 1].dni,
+                                             globals()["libros"][libro - 1].codigo,
+                                             globals()["libros"][libro - 1].prestamo))
+                                globals()["libros"][libro - 1].ejemplar = int(
+                                    globals()["libros"][libro - 1].ejemplar) - 1
+                                print("Préstamo añadido correctamente.")
+                                globals()["guardarPrestamos"]()
                     else:
-                        print("Préstamo cancelado.")
+                        print("No hay usuario al que hacerle un préstamo.")
         else:
-            print("Préstamo cancelado.")
+            print("No hay libros para hacer un préstamo.")
     elif tipo == 2:
         listarRevistas(None)
         if len(globals()["revistas"]) > 0:
             revista = int(input("¿De qué revista desea hacer el préstamo?"))
-            if 0 > revista > len(globals()["revistas"]):
+            if 0 < revista > len(globals()["revistas"]):
                 print("Número no válido.")
             else:
                 if globals()["revistas"][revista - 1].ejemplar == 0:
@@ -652,26 +656,29 @@ def agregarPrestamo():
                     listarRevistas(None)
                     if globals()["usuarios"] > 0:
                         usuario = int(input("¿A qué usuario desea hacerle el préstamo?"))
-                        if 0 > usuario > len(globals()["usuarios"]):
+                        if 0 < usuario > len(globals()["usuarios"]):
                             print("Usuario no válido.")
                         else:
-                            globals()["prestamos"].add(
-                                Prestamo(globals()["usuarios"][usuario - 1].dni,
-                                         globals()["revistas"][revista - 1].codigo,
-                                         globals()["revistas"][revista - 1].prestamo))
-                            globals()["revistas"][revista - 1].ejemplar = int(
-                                globals()["revistas"][revista - 1].ejemplar) - 1
-                            print("Préstamo añadido correctamente.")
-                            globals()["guardarPrestamos"]()
+                            if tienePrestamo(globals()["usuarios"][usuario - 1].dni):
+                                print("Este usuario ya tiene un préstamo.")
+                            else:
+                                globals()["prestamos"].add(
+                                    Prestamo(globals()["usuarios"][usuario - 1].dni,
+                                             globals()["revistas"][revista - 1].codigo,
+                                             globals()["revistas"][revista - 1].prestamo))
+                                globals()["revistas"][revista - 1].ejemplar = int(
+                                    globals()["revistas"][revista - 1].ejemplar) - 1
+                                print("Préstamo añadido correctamente.")
+                                globals()["guardarPrestamos"]()
                     else:
-                        print("Préstamo cancelado.")
+                        print("No hay usuario al que hacerle un préstamo.")
         else:
-            print("Préstamo cancelado.")
+            print("No hay revistas para hacer un préstamo.")
     elif tipo == 3:
         listarPeliculas(None)
         if len(globals()["peliculas"]) > 0:
             pelicula = int(input("¿De qué pelicula desea hacer el préstamo?"))
-            if 0 > pelicula > len(globals()["peliculas"]):
+            if 0 < pelicula > len(globals()["peliculas"]):
                 print("Número no válido.")
             else:
                 if globals()["peliculas"][pelicula - 1].ejemplar == 0:
@@ -680,21 +687,24 @@ def agregarPrestamo():
                     listarPeliculas(None)
                     if len(globals()["usuarios"]) > 0:
                         usuario = int(input("¿A qué usuario desea hacerle el préstamo?"))
-                        if 0 > usuario > len(globals()["usuarios"]):
+                        if 0 < usuario > len(globals()["usuarios"]):
                             print("Usuario no válido.")
                         else:
-                            globals()["prestamos"].add(
-                                Prestamo(globals()["usuarios"][usuario - 1].dni,
-                                         globals()["peliculas"][pelicula - 1].codigo,
-                                         globals()["peliculas"][pelicula - 1].prestamo))
-                            globals()["peliculas"][pelicula].ejemplar = int(
-                                globals()["peliculas"][pelicula].ejemplar) - 1
-                            print("Préstamo añadido correctamente.")
-                            globals()["guardarPrestamos"]()
+                            if tienePrestamo(globals()["usuarios"][usuario - 1].dni):
+                                print("Este usuario ya tiene un préstamo.")
+                            else:
+                                globals()["prestamos"].add(
+                                    Prestamo(globals()["usuarios"][usuario - 1].dni,
+                                             globals()["peliculas"][pelicula - 1].codigo,
+                                             globals()["peliculas"][pelicula - 1].prestamo))
+                                globals()["peliculas"][pelicula].ejemplar = int(
+                                    globals()["peliculas"][pelicula].ejemplar) - 1
+                                print("Préstamo añadido correctamente.")
+                                globals()["guardarPrestamos"]()
                     else:
-                        print("Préstamo cancelado.")
+                        print("No hay usuario al que hacerle un préstamo.")
         else:
-            print("Préstamo cancelado.")
+            print("No hay películas para hacer un préstamo.")
     globals()["menuPrestamos"]()
 
 
@@ -720,6 +730,7 @@ def eliminarLibro():
             if eliminado == -1:
                 print("Eliminación cancelada")
             else:
+                eliminarPrestamoPorArticulo(globals()["libros"][eliminado - 1].codigo)
                 globals()["libros"].pop(eliminado - 1)
                 print("Eliminado correctamente")
                 globals()["guardarLibros"]()
@@ -745,8 +756,8 @@ def eliminarRevista():
         else:
             if eliminado == -1:
                 print("Eliminación cancelada")
-                globals()["menuRevistas"]()
             else:
+                eliminarPrestamoPorArticulo(globals()["revistas"][eliminado - 1].codigo)
                 globals()["revistas"].pop(eliminado - 1)
                 print("Eliminada correctamente")
                 globals()["guardarRevistas"]()
@@ -772,8 +783,8 @@ def eliminarPelicula():
         else:
             if eliminado == -1:
                 print("Eliminación cancelada")
-                globals()["menuPeliculas"]()
             else:
+                eliminarPrestamoPorArticulo(globals()["peliculas"][eliminado - 1].codigo)
                 globals()["libros"].pop(eliminado - 1)
                 print("Eliminado correctamente")
                 globals()["guardarPeliculas"]()
@@ -786,6 +797,7 @@ def eliminarUsuario():
     if tieneRegistros(globals()["usuarios"]):
         listarUsuarios(None)
         valido = False
+        contador = 0
         while not valido:
             try:
                 eliminado = int(input("¿Qué usuario desea eliminar? (Para salir introduzca -1): "))
@@ -800,7 +812,14 @@ def eliminarUsuario():
             if eliminado == -1:
                 print("Eliminación cancelada")
             else:
+                codigo = globals()["usuarios"][eliminado - 1].dni
+                for prestamo in globals()["prestamos"]:
+                    if prestamo.dni == codigo:
+                        sumarStock(prestamo.articulo)
+                        globals()["prestamos"].pop(contador)
+                    contador += 1
                 globals()["usuarios"].pop(eliminado - 1)
+                globals()["guardarPrestamos"]()
                 print("Eliminado correctamente")
                 globals()["guardarUsuarios"]()
     else:
@@ -827,18 +846,7 @@ def eliminarPrestamo():
                 print("Eliminación cancelada")
             else:
                 articulo = globals()["prestamos"][eliminado - 1].articulo
-                if articulo.startswith("LIB"):
-                    for libro in globals()["libros"]:
-                        if libro.codigo == articulo:
-                            libro.ejemplar = int(libro.ejemplar) + 1
-                elif articulo.startswith("REV"):
-                    for revista in globals()["revistas"]:
-                        if revista.codigo == articulo:
-                            revista.ejemplar = int(revista.ejemplar) + 1
-                elif articulo.startswith("PEL"):
-                    for pelicula in globals()["peliculas"]:
-                        if pelicula.codigo == articulo:
-                            pelicula.ejemplar = int(pelicula.ejemplar) + 1
+                sumarStock(articulo)
                 globals()["prestamos"].pop(eliminado - 1)
                 print("Eliminado correctamente")
                 globals()["guardarPrestamos"]()
@@ -890,9 +898,39 @@ def tieneRegistros(lista):
     return valido
 
 
+def sumarStock(articulo):
+    if articulo.startswith("LIB"):
+        for libro in globals()["libros"]:
+            if libro.codigo == articulo:
+                libro.ejemplar = int(libro.ejemplar) + 1
+    elif articulo.startswith("REV"):
+        for revista in globals()["revistas"]:
+            if revista.codigo == articulo:
+                revista.ejemplar = int(revista.ejemplar) + 1
+    elif articulo.startswith("PEL"):
+        for pelicula in globals()["peliculas"]:
+            if pelicula.codigo == articulo:
+                pelicula.ejemplar = int(pelicula.ejemplar) + 1
+
+
+def tienePrestamo(dni):
+    tiene = False
+    for prestamo in globals()["prestamos"]:
+        if dni == prestamo.dni:
+            tiene = True
+    return tiene
+
+
+def eliminarPrestamoPorArticulo(codigo):
+    contador = 0
+    for prestamo in globals()["prestamos"]:
+        if prestamo.articulo == codigo:
+            globals()["prestamos"].pop(contador)
+        contador += 1
+
+
 # endregion
 
 # MAIN
-globals()["prestamos"] = list(globals()["prestamos"])
 cargarDatos()
 menuPrincipal()
