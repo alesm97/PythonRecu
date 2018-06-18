@@ -1,3 +1,4 @@
+import webbrowser
 from datetime import datetime
 from xml.dom import minidom
 
@@ -20,6 +21,7 @@ funcionesMenuPropietarios = (
     "listarPropietarios", "agregarPropietario", "eliminarPropietario", "menuPrincipal")
 funcionesMenuMascotas = ("menuGatos", "menuPerros", "menuPrincipal")
 funcionesMenuGatos = ("listarGatos", "agregarGato", "eliminarGato", "menuMascotas")
+funcionesMenuHTML = ("mostrarAdopcionesHTML", "mostrarClinicasHTML", "mostrarMascotasHTML", "menuHTML")
 funcionesMenuPerros = ("listarPerros", "agregarPerro", "eliminarPerro", "menuMascotas")
 funcionesMenuAdopciones = ("listarAdopciones", "agregarAdopcion", "eliminarAdopcion", "menuPrincipal")
 
@@ -230,6 +232,28 @@ def menuAdopciones():
                 globals()[funcionesMenuAdopciones[opcion - 1]]("menuAdopciones")
             else:
                 globals()[funcionesMenuAdopciones[opcion - 1]]()
+
+
+def menuHTML():
+    globals()["opcion"] = -1
+    print("/*****************************************\\")
+    print("/*                                       *\\")
+    print("/*                  HTML                 *\\")
+    print("/*                                       *\\")
+    print("/*****************************************\\")
+    print("/*                                       *\\")
+    print("/*             1.- Adopciones            *\\")
+    print("/*             2.- Clinicas              *\\")
+    print("/*             3.- Masc y Prop           *\\")
+    print("/*             4.- Volver                *\\")
+    print("/*                                       *\\")
+    print("/*****************************************\\")
+
+    preguntarMenu("hacer", 5)
+
+    if funcionesMenuHTML[opcion - 1] in globals():
+        if callable(globals()[funcionesMenuHTML[opcion - 1]]):
+            globals()[funcionesMenuHTML[opcion - 1]]()
 
 
 # endregion
@@ -799,7 +823,8 @@ def agregarAdopcion():
                                     if puedeAdoptar(globals()["propietarios"][propietario - 1]):
                                         globals()["adopciones"].append(Adopcion(globals()["gatos"][gato - 1].codigo,
                                                                                 globals()["propietarios"][
-                                                                                    propietario - 1].dni, str(datetime.now())))
+                                                                                    propietario - 1].dni,
+                                                                                str(datetime.now())))
                                         globals()["gatos"][gato - 1].disponible = False
                                         print("Adopcion realizada correctamente")
                                         globals()["guardarAdopciones"]()
@@ -840,7 +865,8 @@ def agregarAdopcion():
                                     if puedeAdoptar(globals()["propietarios"][propietario - 1]):
                                         globals()["adopciones"].append(Adopcion(globals()["perros"][perro - 1].codigo,
                                                                                 globals()["propietarios"][
-                                                                                    propietario - 1].dni, str(datetime.now())))
+                                                                                    propietario - 1].dni,
+                                                                                str(datetime.now())))
                                         globals()["perros"][perro - 1].disponible = False
                                         print("Adopcion realizada correctamente")
                                         globals()["guardarAdopciones"]()
@@ -995,6 +1021,84 @@ def eliminarPerro():
     else:
         print("No hay perros para eliminar")
     globals()["menuPerros"]()
+
+
+# endregion
+
+# region HTML
+def mostrarAdopcionesHTML():
+    f = open('html/listado.html', 'w')
+    contador = 1
+
+    mensaje = "<html><body><h1><b>Adopciones</bZ</h1><table border='1'><th>Numero Adopción</th><th>Mascota</th><th>Propietario</th><th>Fecha adopcion</th>"
+    for adopcion in globals()["adopciones"]:
+        mensaje += "<tr><td>" + contador + "</td>"
+        mensaje += "<td>" + adopcion.mascota + "</td>"
+        mensaje += "<td>" + adopcion.propietario + "</td>"
+        mensaje += "<td>" + adopcion.fecha + "</td></tr>"
+
+    mensaje += "</table></body></html>"
+
+    f.write(mensaje)
+    f.close()
+
+    webbrowser.open_new_tab('html/listado.html')
+    globals()["menuHTML"]()
+
+
+def mostrarClinicasHTML():
+    f = open('html/listado.html', 'w')
+
+    mensaje = "<html><body><h1><b>Clinicas</bZ</h1><table border='1'><th>Codigo</th><th>Calle</th><th>Titular</th>"
+
+    for clinica in globals()["clinicas"]:
+        mensaje += "<tr><td>" + clinica.codigo + "</td>"
+        mensaje += "<td>" + clinica.direccion + "</td>"
+        mensaje += "<td>" + clinica.titular + "</td></tr>"
+        for veterinario in globals()["veterinarios"]:
+            if veterinario.clinica == clinica.codigo:
+                mensaje += "<tr>" + veterinario.dni + "</tr>"
+
+    mensaje += "</table></body></html>"
+
+    f.write(mensaje)
+    f.close()
+
+    webbrowser.open_new_tab('html/listado.html')
+    globals()["menuHTML"]()
+
+
+def mostrarMascotasHTML():
+    f = open('html/listado.html', 'w')
+
+    mensaje = "<html><body><h1><b>Mascotas</bZ</h1><table border='1'><th>Codigo</th><th>Nombre</th><th>Disponible</th>"
+
+    for perro in globals()["perros"]:
+        mensaje += "<tr><td>" + perro.codigo + "</td>"
+        mensaje += "<td>" + perro.nombre + "</td>"
+        mensaje += "<td>" + perro.disponible + "</td></tr>"
+
+    for gato in globals()["gatos"]:
+        mensaje += "<tr><td>" + gato.codigo + "</td>"
+        mensaje += "<td>" + gato.nombre + "</td>"
+        mensaje += "<td>" + gato.disponible + "</td></tr>"
+
+    mensaje += "</table>"
+
+    mensaje = "<h1><b>Propietarios</bZ</h1><table border='1'><th>DNI</th><th>Nombre</th><th>Telefono</th>"
+
+    for propietario in globals()["propietarios"]:
+        mensaje += "<tr><td>" + propietario.dni + "</td>"
+        mensaje += "<td>" + propietario.nombre + "</td>"
+        mensaje += "<td>" + propietario.telefono + "</td></tr>"
+
+    mensaje += "</table></body></html>"
+
+    f.write(mensaje)
+    f.close()
+
+    webbrowser.open_new_tab('html/listado.html')
+    globals()["menuHTML"]()
 
 
 # endregion
