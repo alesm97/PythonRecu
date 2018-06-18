@@ -8,11 +8,11 @@ def generarCodigo(self, codigo):
 
 
 def obtener_num_clinica(self):
-    file = open("listas/numPerros.txt", "r")
+    file = open("listas/numGatos.txt", "r")
     numero = int(file.readline())
     numero += 1
 
-    file2 = open("listas/numPerros.txt", "w")
+    file2 = open("listas/numGatos.txt", "w")
     file2.write("{}".format(numero))
 
     file.close()
@@ -21,8 +21,8 @@ def obtener_num_clinica(self):
     return numero
 
 
-class Gato(Mascota):
-    def __init__(self, nombre, fecNacimiento, disponible, pelaje, sociable, codigo=None):
-        Mascota.Mascota(nombre, fecNacimiento, disponible, generarCodigo(self, codigo))
+class Gato(Mascota.Mascota):
+    def __init__(self, nombre, fecNacimiento, fecRegistro, disponible, pelaje, sociable, codigo=None):
+        Mascota.Mascota.__init__(self, nombre, fecNacimiento, fecRegistro, disponible, generarCodigo(self, codigo))
         self.pelaje = pelaje
         self.sociable = sociable

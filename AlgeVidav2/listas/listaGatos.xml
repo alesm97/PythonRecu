@@ -1,4 +1,12 @@
 <?xml version="1.0" ?>
 <listaGatos>
-
+	<gato>
+		<nombre>b</nombre>
+		<fecNacimiento>b</fecNacimiento>
+		<fecRegistro>2018-06-18 14:43:15.634052</fecRegistro>
+		<disponible>True</disponible>
+		<pelaje>b</pelaje>
+		<sociable>False</sociable>
+		<codigo>GAT5</codigo>
+	</gato>
 </listaGatos>

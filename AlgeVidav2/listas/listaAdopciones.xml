@@ -1,4 +1,8 @@
 <?xml version="1.0" ?>
 <listaAdopciones>
-
+	<adopcion>
+		<mascota>GAT5</mascota>
+		<propietario>a</propietario>
+		<fecha>2018-06-18 15:06:32.385794</fecha>
+	</adopcion>
 </listaAdopciones>

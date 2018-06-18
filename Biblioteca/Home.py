@@ -51,7 +51,6 @@ def menuPrincipal():
     if funcionesMenuPrincipal[globals()["opcion"] - 1] in globals():
         if callable(globals()[funcionesMenuPrincipal[globals()["opcion"] - 1]]):
             globals()[funcionesMenuPrincipal[globals()["opcion"] - 1]]()
-    # TODO salir si no existe la función avisando al usuario o programador
 
 
 def menuLibros():

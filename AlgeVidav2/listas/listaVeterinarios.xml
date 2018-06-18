@@ -1,4 +1,23 @@
 <?xml version="1.0" ?>
 <listaVeterinarios>
-
+	<veterinario>
+		<dni>a</dni>
+		<direccion>a</direccion>
+		<telefono>a</telefono>
+		<email>a</email>
+		<intereses>a</intereses>
+		<colegiado>a</colegiado>
+		<especialidad>a</especialidad>
+		<clinica>Voluntario</clinica>
+	</veterinario>
+	<veterinario>
+		<dni>b</dni>
+		<direccion>b</direccion>
+		<telefono>b</telefono>
+		<email>b</email>
+		<intereses>b</intereses>
+		<colegiado>b</colegiado>
+		<especialidad>b</especialidad>
+		<clinica>CLI1</clinica>
+	</veterinario>
 </listaVeterinarios>

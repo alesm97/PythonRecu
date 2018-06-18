@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<listaPropietarios>
+	<propietario>
+		<dni>a</dni>
+		<direccion>a</direccion>
+		<telefono>a</telefono>
+		<email>a</email>
+		<intereses>a</intereses>
+		<haTenidoMascota>False</haTenidoMascota>
+		<conocAdiestramiento>True</conocAdiestramiento>
+	</propietario>
+</listaPropietarios>

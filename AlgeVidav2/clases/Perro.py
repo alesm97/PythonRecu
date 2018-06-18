@@ -21,8 +21,8 @@ def obtener_num_clinica(self):
     return numero
 
 
-class Perro(Mascota):
-    def __init__(self, nombre, fecNacimiento, disponible, raza, habilidades, codigo=None):
-        Mascota.Mascota(nombre, fecNacimiento, disponible, generarCodigo(self, codigo))
+class Perro(Mascota.Mascota):
+    def __init__(self, nombre, fecNacimiento, fecRegistro, disponible, raza, habilidades, codigo=None):
+        Mascota.Mascota.__init__(self, nombre, fecNacimiento, fecRegistro, disponible, generarCodigo(self, codigo))
         self.raza = raza
         self.habilidades = habilidades
