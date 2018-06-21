@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<listaVacunas>
+	<vacuna>
+		<veterinario>VET-2</veterinario>
+		<mascota>GAT5</mascota>
+		<nombre>Rabia</nombre>
+		<fecha>2018-06-21 13:30:53.311701</fecha>
+	</vacuna>
+</listaVacunas>

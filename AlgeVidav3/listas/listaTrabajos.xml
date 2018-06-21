@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<listaTrabajos>
+	<trabajo>
+		<codigo>CO-1</codigo>
+		<descripcion>Perro</descripcion>
+		<mascota>-</mascota>
+	</trabajo>
+</listaTrabajos>

@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<listaVeterinariosCol>
+	<veterinarioCol>
+		<dni>asdasdasd</dni>
+		<direccion>ddfgdfgdfg</direccion>
+		<telefono>hjghjghjg</telefono>
+		<email>wewrwerwre</email>
+		<intereses>cvbcbvcvbcvb</intereses>
+		<habilidades>dfwerwerwr</habilidades>
+		<colegiado>fgfnfn</colegiado>
+		<codigo>VET-2</codigo>
+	</veterinarioCol>
+	<veterinarioCol>
+		<dni>sgfbfgbdfgb</dni>
+		<direccion>dgfbbggb</direccion>
+		<telefono>dghdfghdfgh</telefono>
+		<email>hfdhgfdhgdfgh</email>
+		<intereses>dfghdfghdfhg</intereses>
+		<habilidades>fdghdfhgdfhg</habilidades>
+		<colegiado>sdfgn</colegiado>
+		<codigo>VET-3</codigo>
+	</veterinarioCol>
+</listaVeterinariosCol>

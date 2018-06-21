@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<listaClinicas>
+	<clinica>
+		<direccion>Calle 1</direccion>
+		<telefono>589746859</telefono>
+		<email>jaja</email>
+		<titular>yo</titular>
+		<codigo>CLI1</codigo>
+	</clinica>
+</listaClinicas>

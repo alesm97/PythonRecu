@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<listaColaboradores>
+	<colaborador>
+		<dni>5874664as</dni>
+		<direccion>asdasdad</direccion>
+		<telefono>asdasdd</telefono>
+		<email>asdasdasd</email>
+		<intereses>asdasdasd</intereses>
+		<habilidades>asdasdasd</habilidades>
+		<poblacion>asdasdasd</poblacion>
+		<disposicion>asdasd</disposicion>
+		<codigo>CO-1</codigo>
+	</colaborador>
+	<colaborador>
+		<dni>asdasdasd</dni>
+		<direccion>qweqweqweqe</direccion>
+		<telefono>qweqeqwqe</telefono>
+		<email>qweqeqweqew</email>
+		<intereses>qweqeqwe</intereses>
+		<habilidades>qewqweqwe</habilidades>
+		<poblacion>qweqweqe</poblacion>
+		<disposicion>qeqweqweqwe</disposicion>
+		<codigo>CO-2</codigo>
+	</colaborador>
+	<colaborador>
+		<dni>tytutytu</dni>
+		<direccion>ututyutyu</direccion>
+		<telefono>tyutyutyu</telefono>
+		<email>tyutyutu</email>
+		<intereses>tyutyutyutyu</intereses>
+		<habilidades>utyutuytu</habilidades>
+		<poblacion>tyutyutuyt</poblacion>
+		<disposicion>tyutyutyutu</disposicion>
+		<codigo>CO-3</codigo>
+	</colaborador>
+</listaColaboradores>
