@@ -1790,7 +1790,7 @@ def listarTrabajosVeterinariosHTML():
 
         for tarea in globals()["trabajos"]:
             if tarea.codigo == colaborador.codigo:
-                mensaje += "<td>" + tarea.descripcion + "</td><td>" + "-" if not tarea.mascota else tarea.mascota + "/td></tr>"
+                mensaje += "<td>" + tarea.descripcion + "</td><td>" + "-" if not tarea.mascota else tarea.mascota + "/td> </tr>"
 
         mensaje += "</div></div>"
 
